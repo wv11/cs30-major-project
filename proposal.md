@@ -1,6 +1,6 @@
 # Proposal
 
-Put a description of what you're going to do here...
+For my final project, I'm going to be creating an adventure story game
 
 ## Needs to have list
 
