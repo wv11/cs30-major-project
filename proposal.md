@@ -1,13 +1,23 @@
 # Proposal
 
-For my final project, I'm going to be creating an adventure story game
+For my final project, I'm going to be creating an adventure story game that will include battles between the player and characters, with certain aspects
+being inspired by Undertale.
+
 
 ## Needs to have list
 
-- thing 1
-- thing 2
+- At least 1 battle between a character and the player
+- At least 5 characters in the story
+- Let the player choose their character
+- Music, theme songs for each character (made by me)
+- The ability to choose some dialogue, which can result in different things happening depending on what the player has chosen
+- Ending scenes, one for winning, one for losing
+- Hp bars for both the player and character
+
+
 
 ## Nice to have list
 
-- thing 1
-- thing 2
+- 3 battles between different characters and the player
+- Get the players name, and have it used in story dialogue
+- Have the dialogue text gradually write out instead of all appearing at once
