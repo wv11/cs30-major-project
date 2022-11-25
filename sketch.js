@@ -8,36 +8,37 @@
 
 
 class Buttons {
-  constructor(x, y, width, height) {
+  constructor(x, y, buttonW, buttonH) {
     this.x = x;
     this.y = y;
-    this.width = width;
-    this.height = height;
+    this.buttonW = buttonW;
+    this.buttonH = buttonH;
   }
 
   display(anyImage) {
     if (this.isInside(mouseX, mouseY)) {
-      image(anyImage, this.x, this.y, this.width/0.3, this.height/0.3);
+      image(anyImage, this.x, this.y, this.buttonW/0.3, this.buttonH/0.3);
     }
     else {
-      image(anyImage, this.x, this.y, this.width, this.height);
+      image(anyImage, this.x, this.y, this.buttonW, this.buttonH);
     }
   }
 
   isInside(x, y) {
     let leftSide = this.x;
-    let rightSide = this.x + this.width;
+    let rightSide = this.x + this.buttonW;
     let topSide = this.y;
-    let bottomSide = this.y + this.height;
+    let bottomSide = this.y + this.buttonH;
 
     return x > leftSide && x < rightSide && y > topSide && y < bottomSide;
   }
 
 }
 
-let playButton = new Buttons(width/2, height/2, 480, 190);
+
 let gameState = "startingScreen";
 let thePlayButton;
+let playButton;
 
 function preload() {
   thePlayButton = loadImage("sprites/play_button.png");
@@ -47,6 +48,7 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   imageMode(CENTER);
+  playButton = new Buttons(windowWidth/2, windowHeight/2, 480, 190);
 }
 
 function draw() {
@@ -56,16 +58,10 @@ function draw() {
   }
 }
 
-function mouseOverButton(left, right, top, bottom) {
 
-}
 
 function startScreen() {
-
-  if (gameState === "startingScreen") {
-    playButton.display(thePlayButton);
-
-  }
+  playButton.display(thePlayButton);
 
 
 }
