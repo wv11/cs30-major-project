@@ -5,8 +5,6 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-
-
 class Buttons {
   constructor(x, y, buttonW, buttonH) {
     this.x = x;
@@ -17,7 +15,7 @@ class Buttons {
 
   display(anyImage) {
     if (this.isInside(mouseX, mouseY)) {
-      image(anyImage, this.x, this.y, this.buttonW/0.3, this.buttonH/0.3);
+      image(anyImage, this.x, this.y, this.buttonW*1.1, this.buttonH*1.1);
     }
     else {
       image(anyImage, this.x, this.y, this.buttonW, this.buttonH);
@@ -25,30 +23,25 @@ class Buttons {
   }
 
   isInside(x, y) {
-    let leftSide = this.x;
-    let rightSide = this.x + this.buttonW;
-    let topSide = this.y;
-    let bottomSide = this.y + this.buttonH;
-
+    let leftSide = this.x - this.buttonW/2;
+    let rightSide = this.x + this.buttonW/2;
+    let topSide = this.y - this.buttonH/2;
+    let bottomSide = this.y + this.buttonH/2;
     return x > leftSide && x < rightSide && y > topSide && y < bottomSide;
   }
-
 }
 
-
 let gameState = "startingScreen";
-let thePlayButton;
+let playButtonImg;
 let playButton;
 
 function preload() {
-  thePlayButton = loadImage("sprites/play_button.png");
-
+  playButtonImg = loadImage("sprites/play_button.png");
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   imageMode(CENTER);
-  playButton = new Buttons(windowWidth/2, windowHeight/2, 480, 190);
 }
 
 function draw() {
@@ -58,10 +51,11 @@ function draw() {
   }
 }
 
-
-
 function startScreen() {
-  playButton.display(thePlayButton);
-
-
+  playButton = new Buttons(windowWidth/2, windowHeight/2, 350, 130);
+  playButton.display(playButtonImg);
+  if (mouseIsPressed === true && playButton.isInside(mouseX, mouseY)) {
+    gameState = "charSelect";
+  }
 }
+
