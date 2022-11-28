@@ -59,3 +59,7 @@ function startScreen() {
   }
 }
 
+
+function gameBegins() {
+  
+}
