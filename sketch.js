@@ -31,12 +31,19 @@ class Buttons {
   }
 }
 
+
+
 let gameState = "startingScreen";
 let playButtonImg;
 let playButton;
+let optButtonImg;
+let optButton;
+let textboxImg;
 
 function preload() {
   playButtonImg = loadImage("sprites/play_button.png");
+  optButtonImg = loadImage("sprites/opt_button.png");
+  textboxImg = loadImage("sprites/textbox.png");
 }
 
 function setup() {
@@ -55,9 +62,21 @@ function startScreen() {
   playButton = new Buttons(windowWidth/2, windowHeight/2, 350, 130);
   playButton.display(playButtonImg);
   if (mouseIsPressed === true && playButton.isInside(mouseX, mouseY)) {
-    gameState = "charSelect";
+    gameState = "gameBegins";
   }
+  optButton = new Buttons(windowWidth/2, windowHeight/2 + 130, 250, 75);
+  optButton.display(optButtonImg);
+  if (mouseIsPressed === true && optButton.isInside(mouseX, mouseY)) {
+    gameState = "options";
+  }
+
 }
+
+function createTextbox(character, text) {
+  image(textboxImg, )
+
+}
+
 
 
 function gameBegins() {
