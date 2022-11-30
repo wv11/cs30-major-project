@@ -58,12 +58,15 @@ let optButtonImg;
 let optButton;
 let textboxImg;
 let pixelFont;
+let textArray = [];
+let i = 0;
 
 function preload() {
   pixelFont = loadFont("assets/font.ttf");
   playButtonImg = loadImage("sprites/play_button.png");
   optButtonImg = loadImage("sprites/opt_button.png");
   textboxImg = loadImage("sprites/textbox.png");
+  textArray = loadJSON("text.json");
 }
 
 function setup() {
@@ -117,9 +120,13 @@ function createTextbox(words, boxW, boxH) {
   text(words, width/2 - boxW/2 + 10*1.4, height - boxH - boxH/2 + 30*1.2);
 }
 
-
-
 function startGame() {
-  createTextbox(">Testing... ", 600, 200);
-  
+  createTextbox(textArray[i], 600, 200); 
 }
+
+function mousePressed() {
+  if (gameState === "gameBegins") {
+    i++;
+  }
+}
+
