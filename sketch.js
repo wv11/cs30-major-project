@@ -60,6 +60,10 @@ let textboxImg;
 let pixelFont;
 let textArray = [];
 let i = 0;
+let j = 0;
+let x;
+let y;
+
 
 function preload() {
   pixelFont = loadFont("assets/font.ttf");
@@ -73,6 +77,9 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   imageMode(CENTER); 
   rectMode(CENTER);
+  x = windowWidth/2;
+  y = windowHeight/2;
+
 }
 
 function draw() {
@@ -86,28 +93,28 @@ function draw() {
   else if (gameState === "gameBegins") {
     startGame();
   }
+  else if (gameState === "startBattle") {
+    battle();
+  }
 }
 
 function startScreen() {
   playButton = new Buttons(windowWidth/2, windowHeight/2, 350, 130);
   playButton.display("PLAY", 90, 15, 5);
   if (mouseIsPressed === true && playButton.isInside(mouseX, mouseY)) {
-    gameState = "gameBegins";
+    gameState = "startBattle";
   }
   optButton = new Buttons(windowWidth/2, windowHeight/2 + 130, 250, 75);
   optButton.display("OPTIONS", 40, 10, 1);
   if (mouseIsPressed === true && optButton.isInside(mouseX, mouseY)) {
     gameState = "options";
   }
-  
-
 }
 
 function optionsScreen() {
-
 }
 
-function createTextbox(words, boxW, boxH) {
+function createTextbox(boxW, boxH) {
   textAlign(LEFT, BASELINE);
   fill(0);
   stroke(255);
@@ -117,16 +124,38 @@ function createTextbox(words, boxW, boxH) {
   textSize(30);
   fill(255);
   strokeWeight(0.5);
-  text(words, width/2 - boxW/2 + 10*1.4, height - boxH - boxH/2 + 30*1.2);
+  text(textArray[i][j], width/2 - boxW/2 + 10*1.4, height - boxH - boxH/2 + 30*1.2);
 }
 
 function startGame() {
-  createTextbox(textArray[i], 600, 200); 
+  createTextbox(600, 200); 
 }
 
 function mousePressed() {
-  if (gameState === "gameBegins") {
-    i++;
+  if (gameState === "gameBegins") {   
+    if (j === textArray[i].length - 1) {
+      i= i+1;
+      j = 0;
+    }
+    else {
+      j++;
+    }
   }
+}
+
+function battle() {
+
+  fill(0);
+  strokeWeight(9);
+  rect(width/2, height/2, width/3, width/3);
+  circle(x, y, 5);
+  if (y > height/2 - width/3/2 + 9+5) {
+    if (keyIsPressed && keyCode === 87) {
+      y -= 2;
+    }
+  }
+
+  
+  
 }
 
