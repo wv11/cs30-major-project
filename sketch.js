@@ -58,7 +58,7 @@ let optButtonImg;
 let optButton;
 let textboxImg;
 let pixelFont;
-let textArray = [];
+let textArray;
 let i = 0;
 let j = 0;
 let x;
@@ -87,13 +87,13 @@ function draw() {
   if (gameState === "startingScreen") {
     startScreen();
   }
-  else if (gameState === "options") {
+  if (gameState === "options") {
     optionsScreen();
   }
-  else if (gameState === "gameBegins") {
+  if (gameState === "gameBegins") {
     startGame();
   }
-  else if (gameState === "startBattle") {
+  if (gameState === "startBattle") {
     battle();
   }
 }
@@ -102,7 +102,7 @@ function startScreen() {
   playButton = new Buttons(windowWidth/2, windowHeight/2, 350, 130);
   playButton.display("PLAY", 90, 15, 5);
   if (mouseIsPressed === true && playButton.isInside(mouseX, mouseY)) {
-    gameState = "startBattle";
+    gameState = "gameBegins";
   }
   optButton = new Buttons(windowWidth/2, windowHeight/2 + 130, 250, 75);
   optButton.display("OPTIONS", 40, 10, 1);
@@ -129,33 +129,53 @@ function createTextbox(boxW, boxH) {
 
 function startGame() {
   createTextbox(600, 200); 
+  
 }
 
 function mousePressed() {
-  if (gameState === "gameBegins") {   
+  if (gameState === "gameBegins") {
     if (j === textArray[i].length - 1) {
       i= i+1;
       j = 0;
     }
     else {
       j++;
-    }
-  }
+    }   
+  } 
 }
 
 function battle() {
-
+  let edge = 9+5;
+  let speed = 7;
   fill(0);
   strokeWeight(9);
   rect(width/2, height/2, width/3, width/3);
   circle(x, y, 5);
-  if (y > height/2 - width/3/2 + 9+5) {
-    if (keyIsPressed && keyCode === 87) {
-      y -= 2;
+  if (y > height/2 - width/3/2 + edge) {
+    if (keyIsDown(87)) {
+      y -= speed;
     }
   }
+  if (y < height/2 + width/3/2 - edge) {
+    if (keyIsDown(83)) {
+      y += speed;
+    }
+  }
+  if (x > width/3 + edge) {
+    if (keyIsDown(65)) {
+      x -= speed;
+    }
+  }
+  if (x < width/3*2 - edge) {
+    if (keyIsDown(68)) {
+      x += speed;
+    }
+  }
+
+
 
   
   
 }
+
 
