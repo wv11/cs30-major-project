@@ -12,7 +12,7 @@ being inspired by Undertale.
 - Music, theme songs for each character (made by me)
 - The ability to choose some dialogue, which can result in different things happening depending on what the player has chosen
 - Ending scenes, one for winning, one for losing
-- Hp bars for both the player and character
+- Hp bar for the player
 
 
 
