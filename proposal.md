@@ -8,7 +8,6 @@ being inspired by Undertale.
 
 - At least 1 battle between a character and the player
 - At least 5 characters in the story
-- Let the player choose their character
 - Music, theme songs for each character (made by me)
 - The ability to choose some dialogue, which can result in different things happening depending on what the player has chosen
 - Ending scenes, one for winning, one for losing
