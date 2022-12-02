@@ -148,8 +148,6 @@ function startGame() {
   noStroke();
   rect(width/2, height, width, height/4);
   createTextbox(600, 200);
-  
-  
 }
 
 function mousePressed() {
@@ -160,8 +158,12 @@ function mousePressed() {
     }
     else {
       j++;
+    }
+    if (textArray[i][j] === "hfiwohfwoifh") {
+      gameState = "startBattle";
+      
     }   
-  } 
+  }
 }
 
 function battle() {
