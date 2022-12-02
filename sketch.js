@@ -63,6 +63,14 @@ let i = 0;
 let j = 0;
 let x;
 let y;
+let adia;
+let adiaNeutral;
+let adiaNeutralTalk;
+let adiaHappyTalk;
+let adiaClosedEyeTalk;
+let adiaClosedEyeNeutral;
+
+
 
 
 function preload() {
@@ -71,6 +79,8 @@ function preload() {
   optButtonImg = loadImage("sprites/opt_button.png");
   textboxImg = loadImage("sprites/textbox.png");
   textArray = loadJSON("text.json");
+  adiaNeutral = loadImage("sprites/character1/pixil-frame-0 (3).png");
+
 }
 
 function setup() {
@@ -127,8 +137,18 @@ function createTextbox(boxW, boxH) {
   text(textArray[i][j], width/2 - boxW/2 + 10*1.4, height - boxH - boxH/2 + 30*1.2);
 }
 
+function displayAdia() {
+  image(adiaNeutral, width/2, height/2+height/5, 336, 1155);
+
+}
+
 function startGame() {
-  createTextbox(600, 200); 
+  displayAdia(); 
+  fill(0);
+  noStroke();
+  rect(width/2, height, width, height/4);
+  createTextbox(600, 200);
+  
   
 }
 
