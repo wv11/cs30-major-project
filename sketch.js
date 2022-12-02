@@ -191,11 +191,6 @@ function battle() {
       x += speed;
     }
   }
-
-
-
-  
-  
 }
 
 
