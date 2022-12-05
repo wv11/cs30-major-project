@@ -64,22 +64,17 @@ let j = 0;
 let x;
 let y;
 let adia;
-let adiaNeutral;
-let adiaNeutralTalk;
-let adiaHappyTalk;
-let adiaClosedEyeTalk;
-let adiaClosedEyeNeutral;
+
+
+
 
 
 
 
 function preload() {
   pixelFont = loadFont("assets/font.ttf");
-  playButtonImg = loadImage("sprites/play_button.png");
-  optButtonImg = loadImage("sprites/opt_button.png");
-  textboxImg = loadImage("sprites/textbox.png");
   textArray = loadJSON("text.json");
-  adiaNeutral = loadImage("sprites/character1/pixil-frame-0 (3).png");
+  adia.neutral = loadImage("sprites/character1/pixil-frame-0 (3).png");
 
 }
 
@@ -138,7 +133,7 @@ function createTextbox(boxW, boxH) {
 }
 
 function displayAdia() {
-  image(adiaNeutral, width/2, height/2+height/5, 336, 1155);
+  image(adia.neutral, width/2, height/2+height/5, 336, 1155);
 
 }
 
@@ -159,7 +154,7 @@ function mousePressed() {
     else {
       j++;
     }
-    if (textArray[i][j] === "hfiwohfwoifh") {
+    if (i === Object.keys(textArray).length) {
       gameState = "startBattle";
       
     }   
