@@ -63,7 +63,9 @@ let i = 0;
 let j = 0;
 let x;
 let y;
-let adia;
+let adia = {
+
+};
 
 
 
@@ -74,7 +76,7 @@ let adia;
 function preload() {
   pixelFont = loadFont("assets/font.ttf");
   textArray = loadJSON("text.json");
-  adia.neutral = loadImage("sprites/character1/pixil-frame-0 (3).png");
+  adia.neutral = loadImage("sprites/adia/neutral.png");
 
 }
 
