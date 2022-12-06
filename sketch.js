@@ -59,24 +59,24 @@ let optButton;
 let textboxImg;
 let pixelFont;
 let textArray;
+let spriteArray;
 let i = 0;
 let j = 0;
 let x;
 let y;
 let adia = {
-
 };
-
-
-
-
-
 
 
 function preload() {
   pixelFont = loadFont("assets/font.ttf");
   textArray = loadJSON("text.json");
+  spriteArray = loadJSON("sprite.json");
   adia.neutral = loadImage("sprites/adia/neutral.png");
+  adia.neutralTalking = loadImage("sprites/adia/neutral_talking.png");
+  adia.ecTalking = loadImage("sprites/adia/eyesClosed_talking.png");
+  adia.ecNeutral = loadImage("sprites/adia/eyesClosed_neutral.png");
+  adia.happyTalking = loadImage("sprites/adia/happy_talking.png");
 
 }
 
@@ -84,8 +84,10 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   imageMode(CENTER); 
   rectMode(CENTER);
+  ellipseMode(CENTER);
   x = windowWidth/2;
   y = windowHeight/2;
+  cursor(ARROW);
 
 }
 
@@ -134,12 +136,27 @@ function createTextbox(boxW, boxH) {
   text(textArray[i][j], width/2 - boxW/2 + 10*1.4, height - boxH - boxH/2 + 30*1.2);
 }
 
-function displayAdia() {
-  image(adia.neutral, width/2, height/2+height/5, 336, 1155);
+function displayAdia() { // 0 = neutral, 1 = neutral talking, 2 = eyes closed talking, 3 = eyes closed neutral, 4 = happy talking
+  if (spriteArray[i][j] === 0) {
+    image(adia.neutral, width/2, height/2+height/5, 305.45, 1050);
+  }
+  if (spriteArray[i][j] === 1) {
+    image(adia.neutralTalking, width/2, height/2+height/5, 305.45, 1050);
+  }
+  if (spriteArray[i][j] === 2) {
+    image(adia.ecTalking, width/2, height/2+height/5, 305.45, 1050);
+  }
+  if (spriteArray[i][j] === 3) {
+    image(adia.ecNeutral, width/2, height/2+height/5, 305.45, 1050);
+  }
+  if (spriteArray[i][j] === 4) {
+    image(adia.happyTalking, width/2, height/2+height/5, 305.45, 1050);
+  }
 
 }
 
 function startGame() {
+  noCursor();
   displayAdia(); 
   fill(0);
   noStroke();
@@ -149,7 +166,7 @@ function startGame() {
 
 function mousePressed() {
   if (gameState === "gameBegins") {
-    if (j === textArray[i].length - 1) {
+    if (j === textArray[i].length - 1 || j === spriteArray[i].length - 1) {
       i= i+1;
       j = 0;
     }
@@ -164,12 +181,16 @@ function mousePressed() {
 }
 
 function battle() {
-  let edge = 9+5;
-  let speed = 7;
+  noCursor();
+  let edge = 19;
+  let speed = 10;
   fill(0);
+  stroke(255);
   strokeWeight(9);
   rect(width/2, height/2, width/3, width/3);
-  circle(x, y, 5);
+  noStroke();
+  fill(255);
+  circle(x, y, 20);
   if (y > height/2 - width/3/2 + edge) {
     if (keyIsDown(87)) {
       y -= speed;
@@ -190,6 +211,10 @@ function battle() {
       x += speed;
     }
   }
+}
+
+function displayCursor() {
+  circle(mouseX, mouseY, 20);
 }
 
 
