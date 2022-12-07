@@ -52,11 +52,9 @@ class Buttons {
 }
 
 let gameState = "startingScreen";
-let playButtonImg;
 let playButton;
-let optButtonImg;
-let optButton;
-let textboxImg;
+let htpButton;
+let backButton;
 let pixelFont;
 let textArray;
 let spriteArray;
@@ -87,17 +85,20 @@ function setup() {
   ellipseMode(CENTER);
   x = windowWidth/2;
   y = windowHeight/2;
-  cursor(ARROW);
+  noCursor();
+
+  
 
 }
 
 function draw() {
   background(0);
+
   if (gameState === "startingScreen") {
     startScreen();
   }
-  if (gameState === "options") {
-    optionsScreen();
+  if (gameState === "howToPlay") {
+    howToPlay();
   }
   if (gameState === "gameBegins") {
     startGame();
@@ -107,20 +108,28 @@ function draw() {
   }
 }
 
-function startScreen() {
+function startScreen() { 
   playButton = new Buttons(windowWidth/2, windowHeight/2, 350, 130);
   playButton.display("PLAY", 90, 15, 5);
   if (mouseIsPressed === true && playButton.isInside(mouseX, mouseY)) {
     gameState = "gameBegins";
   }
-  optButton = new Buttons(windowWidth/2, windowHeight/2 + 130, 250, 75);
-  optButton.display("OPTIONS", 40, 10, 1);
-  if (mouseIsPressed === true && optButton.isInside(mouseX, mouseY)) {
-    gameState = "options";
+  htpButton = new Buttons(windowWidth/2, windowHeight/2 + 130, 250, 75);
+  htpButton.display("HOW TO PLAY", 30, 10, 1.5);
+  if (mouseIsPressed === true && htpButton.isInside(mouseX, mouseY)) {
+    gameState = "howToPlay";
   }
+  displayCursor();
 }
 
-function optionsScreen() {
+function howToPlay() {
+  backButton = new Buttons(windowWidth/15, windowHeight/10, 150, 75);
+  backButton.display("BACK", 40, 10, 2);
+  if (mouseIsPressed === true && backButton.isInside(mouseX, mouseY)) {
+    gameState = "startingScreen";
+  }
+  displayCursor();
+
 }
 
 function createTextbox(boxW, boxH) {
@@ -214,7 +223,19 @@ function battle() {
 }
 
 function displayCursor() {
-  circle(mouseX, mouseY, 20);
+  fill("red");
+  noStroke();
+  circle(mouseX, mouseY, 15);
 }
 
+function keyPressed() {
+  if (keyCode === 70) {
+    let fs = fullscreen();
+    fullscreen(!fs);
+  }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
 
