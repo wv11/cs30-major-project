@@ -60,8 +60,10 @@ let textArray;
 let spriteArray;
 let i = 0;
 let j = 0;
-let x;
-let y;
+let x = 0;
+let y = 0;
+let startX;
+let startY;
 let adia = {
 };
 
@@ -83,12 +85,9 @@ function setup() {
   imageMode(CENTER); 
   rectMode(CENTER);
   ellipseMode(CENTER);
-  x = windowWidth/2;
-  y = windowHeight/2;
+  startX = windowWidth/2;
+  startY = windowHeight/2;
   noCursor();
-
-  
-
 }
 
 function draw() {
@@ -190,42 +189,42 @@ function mousePressed() {
 }
 
 function battle() {
-
   noCursor();
   let edge = 19;
-  let speed = 10;
+  let speed = 10; 
   fill(0);
   stroke(255);
   strokeWeight(9);
   rect(width/2, height/2, width/3, width/3);
   noStroke();
   fill(255);
-  circle(x, y, 20);
-  if (y > height/2 - width/3/2 + edge) {
+  circle(startX + x, startY + y, 20);
+  if (startY+y > height/2 - width/3/2 + edge) {
     if (keyIsDown(87)) {
       y -= speed;
     }
   }
-  if (y < height/2 + width/3/2 - edge) {
+  if (startY+y < height/2 + width/3/2 - edge) {
     if (keyIsDown(83)) {
       y += speed;
     }
   }
-  if (x > width/3 + edge) {
+  if (startX+x > width/3 + edge) {
     if (keyIsDown(65)) {
       x -= speed;
     }
   }
-  if (x < width/3*2 - edge) {
+  if (startX+x < width/3*2 - edge) {
     if (keyIsDown(68)) {
       x += speed;
     }
   }
+
 }
 
 function displayCursor() {
-  fill(255);
-  stroke(0);
+  fill("red");
+  noStroke();
   circle(mouseX, mouseY, 15);
 }
 
@@ -238,6 +237,11 @@ function keyPressed() {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-
+  startX = windowWidth/2;
+  startY = windowHeight/2;
 }
+
+
+
+
 
