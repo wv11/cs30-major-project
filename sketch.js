@@ -190,6 +190,7 @@ function mousePressed() {
 }
 
 function battle() {
+
   noCursor();
   let edge = 19;
   let speed = 10;
@@ -223,8 +224,8 @@ function battle() {
 }
 
 function displayCursor() {
-  fill("red");
-  noStroke();
+  fill(255);
+  stroke(0);
   circle(mouseX, mouseY, 15);
 }
 
@@ -237,5 +238,6 @@ function keyPressed() {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+
 }
 
