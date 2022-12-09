@@ -252,7 +252,11 @@ function battle() {
       bullets[i].display();
     }
   }
-  attack1();
+  for (let i = 0; i < 10; i++) {
+    let someBullet = new Bullets(500, 200);
+    bullets.push(someBullet);
+  }
+  
 
 
 }
@@ -276,12 +280,9 @@ function windowResized() {
   startY = windowHeight/2;
 }
 
-function attack1() {
-  for (let i = 0; i < 10; i++) {
-    let someBullet = new Bullets(500, 200);
-    bullets.push(someBullet);
-  }
-}
+
+
+
 
 
 
