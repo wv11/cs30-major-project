@@ -51,6 +51,29 @@ class Buttons {
   }
 }
 
+class Bullets {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.dx = 10;
+    this.dy = 10;
+  }
+
+  display() {
+    fill("blue");
+    circle(this.x, this.y, 30);
+  }
+
+  move() {
+    this.x += this.dx;
+    this.y += this.dy;
+  }
+
+  isDead() {
+    return this.x > width || this.x < 0 || this.y > height || this.y < 0;
+  }
+}
+
 let gameState = "startingScreen";
 let playButton;
 let htpButton;
@@ -58,6 +81,7 @@ let backButton;
 let pixelFont;
 let textArray;
 let spriteArray;
+let bullets = [];
 let i = 0;
 let j = 0;
 let x = 0;
@@ -191,7 +215,7 @@ function mousePressed() {
 function battle() {
   noCursor();
   let edge = 19;
-  let speed = 10; 
+  let speed = 8; 
   fill(0);
   stroke(255);
   strokeWeight(9);
@@ -219,6 +243,17 @@ function battle() {
       x += speed;
     }
   }
+  for (let i = 0; i < bullets.length; i++) {
+    bullets[i].move();
+    if (bullets[i].isDead()) {
+      bullets.splice(i, 1);
+    }
+    else {
+      bullets[i].display();
+    }
+  }
+  attack1();
+
 
 }
 
@@ -241,7 +276,12 @@ function windowResized() {
   startY = windowHeight/2;
 }
 
-
+function attack1() {
+  for (let i = 0; i < 10; i++) {
+    let someBullet = new Bullets(500, 200);
+    bullets.push(someBullet);
+  }
+}
 
 
 
