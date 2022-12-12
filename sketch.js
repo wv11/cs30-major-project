@@ -55,8 +55,8 @@ class Bullets {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.dx = 10;
-    this.dy = 10;
+    this.dx = random(1, 5);
+    this.dy = random(-2, 10);
   }
 
   display() {
@@ -135,7 +135,7 @@ function startScreen() {
   playButton = new Buttons(windowWidth/2, windowHeight/2, 350, 130);
   playButton.display("PLAY", 90, 15, 5);
   if (mouseIsPressed === true && playButton.isInside(mouseX, mouseY)) {
-    gameState = "gameBegins";
+    gameState = "startBattle";
   }
   htpButton = new Buttons(windowWidth/2, windowHeight/2 + 130, 250, 75);
   htpButton.display("HOW TO PLAY", 30, 10, 1.5);
@@ -168,28 +168,28 @@ function createTextbox(boxW, boxH) {
   text(textArray[i][j], width/2 - boxW/2 + 10*1.4, height - boxH - boxH/2 + 30*1.2);
 }
 
-function displayAdia() { // 0 = neutral, 1 = neutral talking, 2 = eyes closed talking, 3 = eyes closed neutral, 4 = happy talking
+function displayAdia(x, y, width, height) { // 0 = neutral, 1 = neutral talking, 2 = eyes closed talking, 3 = eyes closed neutral, 4 = happy talking
   if (spriteArray[i][j] === 0) {
-    image(adia.neutral, width/2, height/2+height/5, 305.45, 1050);
+    image(adia.neutral, x, y, width, height);
   }
   if (spriteArray[i][j] === 1) {
-    image(adia.neutralTalking, width/2, height/2+height/5, 305.45, 1050);
+    image(adia.neutralTalking, x, y, width, height);
   }
   if (spriteArray[i][j] === 2) {
-    image(adia.ecTalking, width/2, height/2+height/5, 305.45, 1050);
+    image(adia.ecTalking, x, y, width, height);
   }
   if (spriteArray[i][j] === 3) {
-    image(adia.ecNeutral, width/2, height/2+height/5, 305.45, 1050);
+    image(adia.ecNeutral, x, y, width, height);
   }
   if (spriteArray[i][j] === 4) {
-    image(adia.happyTalking, width/2, height/2+height/5, 305.45, 1050);
+    image(adia.happyTalking, x, y, width, height);
   }
 
 }
 
 function startGame() {
   noCursor();
-  displayAdia(); 
+  displayAdia(width/2, height/2+height/5, 305.45, 1050); 
   fill(0);
   noStroke();
   rect(width/2, height, width, height/4);
@@ -206,13 +206,13 @@ function mousePressed() {
       j++;
     }
     if (i === Object.keys(textArray).length) {
-      gameState = "startBattle";
-      
+      gameState = "startBattle";     
     }   
   }
 }
 
 function battle() {
+  displayAdia(width/4, height/2, 153, 525);
   noCursor();
   let edge = 19;
   let speed = 8; 
@@ -243,19 +243,23 @@ function battle() {
       x += speed;
     }
   }
-  for (let i = 0; i < bullets.length; i++) {
-    bullets[i].move();
+  for (let someBullet of bullets) {
+    someBullet.move();
+    someBullet.display();
+  }
+
+  for (let i = bullets.length-1; i >=0; i--) {
     if (bullets[i].isDead()) {
-      bullets.splice(i, 1);
-    }
-    else {
-      bullets[i].display();
+      bullets.splice(i,1);
     }
   }
-  for (let i = 0; i < 10; i++) {
-    let someBullet = new Bullets(500, 200);
-    bullets.push(someBullet);
+  for (let i = 0; i < 2; i++) {
+    attack();
   }
+  
+
+
+
   
 
 
@@ -281,8 +285,13 @@ function windowResized() {
 }
 
 
-
-
+function attack() {
+  if (gameState === "startBattle") {    
+    let someBullet = new Bullets(500, 200);
+    bullets.push(someBullet);
+    
+  } 
+}
 
 
 
