@@ -52,11 +52,11 @@ class Buttons {
 }
 
 class Bullets {
-  constructor(x, y) {
+  constructor(x, y, dx, dy) {
     this.x = x;
     this.y = y;
-    this.dx = random(1, 5);
-    this.dy = random(-2, 10);
+    this.dx = dx;
+    this.dy = dy;
   }
 
   display() {
@@ -72,6 +72,8 @@ class Bullets {
   isDead() {
     return this.x > width || this.x < 0 || this.y > height || this.y < 0;
   }
+
+
 }
 
 let gameState = "startingScreen";
@@ -81,6 +83,7 @@ let backButton;
 let pixelFont;
 let textArray;
 let spriteArray;
+let hp = 100;
 let bullets = [];
 let i = 0;
 let j = 0;
@@ -214,12 +217,73 @@ function mousePressed() {
 function battle() {
   displayAdia(width/4, height/2, 153, 525);
   noCursor();
-  let edge = 19;
-  let speed = 8; 
   fill(0);
   stroke(255);
   strokeWeight(9);
   rect(width/2, height/2, width/3, width/3);
+  playerMove();
+
+
+
+
+  bulletAttack();
+  
+  
+  
+
+
+
+  
+
+
+}
+
+function displayCursor() {
+  fill("blue");
+  noStroke();
+  circle(mouseX, mouseY, 15);
+}
+
+function keyPressed() {
+  if (keyCode === 70) {
+    let fs = fullscreen();
+    fullscreen(!fs);
+  }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  startX = windowWidth/2;
+  startY = windowHeight/2;
+}
+
+
+function bulletAttack() {
+  if (gameState === "startBattle") {    
+    let someBullet = new Bullets(width/2, 0, random(-5, 5), 3);
+    bullets.push(someBullet);
+    
+  } 
+  for (let someBullet of bullets) {
+    someBullet.move();
+    someBullet.display();
+  }
+
+  for (let i = bullets.length-1; i >=0; i--) {
+    if (bullets[i].isDead()) {
+      bullets.splice(i,1);
+    }
+  }
+}
+
+function lazerAttack() {
+
+}
+
+
+function playerMove() {
+  let edge = 19;
+  let speed = 4; 
   noStroke();
   fill(255);
   circle(startX + x, startY + y, 20);
@@ -243,55 +307,7 @@ function battle() {
       x += speed;
     }
   }
-  for (let someBullet of bullets) {
-    someBullet.move();
-    someBullet.display();
-  }
-
-  for (let i = bullets.length-1; i >=0; i--) {
-    if (bullets[i].isDead()) {
-      bullets.splice(i,1);
-    }
-  }
-  for (let i = 0; i < 2; i++) {
-    attack();
-  }
-  
-
-
-
-  
-
 
 }
-
-function displayCursor() {
-  fill("red");
-  noStroke();
-  circle(mouseX, mouseY, 15);
-}
-
-function keyPressed() {
-  if (keyCode === 70) {
-    let fs = fullscreen();
-    fullscreen(!fs);
-  }
-}
-
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-  startX = windowWidth/2;
-  startY = windowHeight/2;
-}
-
-
-function attack() {
-  if (gameState === "startBattle") {    
-    let someBullet = new Bullets(500, 200);
-    bullets.push(someBullet);
-    
-  } 
-}
-
 
 
