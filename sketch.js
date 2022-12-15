@@ -73,10 +73,14 @@ class Bullets {
     return this.x > width || this.x < 0 || this.y > height || this.y < 0;
   }
 
+  isTouching() {
+    return x+startX <=this.x+15 && x+startX >=this.x - 15 && y+startY >= this.y+15 && y+startY<= this.y-15;
+  }
+
 
 }
-
 let gameState = "startingScreen";
+let attackState = "none";
 let playButton;
 let htpButton;
 let backButton;
@@ -222,11 +226,9 @@ function battle() {
   strokeWeight(9);
   rect(width/2, height/2, width/3, width/3);
   playerMove();
-
-
-
-
-  bulletAttack();
+  if (attackState === "bullets") {
+    bulletAttack();
+  }
   
   
   
