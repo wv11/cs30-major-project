@@ -142,7 +142,7 @@ function startScreen() {
   playButton = new Buttons(windowWidth/2, windowHeight/2, 350, 130);
   playButton.display("PLAY", 90, 15, 5);
   if (mouseIsPressed === true && playButton.isInside(mouseX, mouseY)) {
-    gameState = "startBattle";
+    gameState = "gameBegins";
   }
   htpButton = new Buttons(windowWidth/2, windowHeight/2 + 130, 250, 75);
   htpButton.display("HOW TO PLAY", 30, 10, 1.5);
