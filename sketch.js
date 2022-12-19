@@ -205,14 +205,14 @@ function startGame() {
 
 function mousePressed() {
   if (gameState === "gameBegins") {
-    if (j === textArray[i].length - 1 || j === spriteArray[i].length - 1) {
+    if (j === textArray[i].length - 1 && j === spriteArray[i].length - 1) {
       i= i+1;
       j = 0;
     }
     else {
       j++;
     }
-    if (i === Object.keys(textArray).length) {
+    if (i === Object.keys(textArray).length  && i === Object.keys(spriteArray).length) {
       gameState = "startBattle";     
     }   
   }
