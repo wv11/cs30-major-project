@@ -175,7 +175,7 @@ function createTextbox(boxW, boxH) {
   text(textArray[i][j], width/2 - boxW/2 + 10*1.4, height - boxH - boxH/2 + 30*1.2);
 }
 
-function displayAdia(x, y, width, height) { // 0 = neutral, 1 = neutral talking, 2 = eyes closed talking, 3 = eyes closed neutral, 4 = happy talking
+function displayAdiaStory(x, y, width, height) { // 0 = neutral, 1 = neutral talking, 2 = eyes closed talking, 3 = eyes closed neutral, 4 = happy talking
   if (spriteArray[i][j] === 0) {
     image(adia.neutral, x, y, width, height);
   }
@@ -194,9 +194,28 @@ function displayAdia(x, y, width, height) { // 0 = neutral, 1 = neutral talking,
 
 }
 
+function displayAdiaBattle(x, y, width, height, num) {
+  if (num === 0) {
+    image(adia.neutral, x, y, width, height);
+  }
+  if (num === 1) {
+    image(adia.neutralTalking, x, y, width, height);
+  }
+  if (num === 2) {
+    image(adia.ecTalking, x, y, width, height);
+  }
+  if (num === 3) {
+    image(adia.ecNeutral, x, y, width, height);
+  }
+  if (num === 4) {
+    image(adia.happyTalking, x, y, width, height);
+  }
+  
+}
+
 function startGame() {
   noCursor();
-  displayAdia(width/2, height/2+height/5, 305.45, 1050); 
+  displayAdiaStory(width/2, height/2+height/5, 305.45, 1050); 
   fill(0);
   noStroke();
   rect(width/2, height, width, height/4);
@@ -205,21 +224,24 @@ function startGame() {
 
 function mousePressed() {
   if (gameState === "gameBegins") {
-    if (j === textArray[i].length - 1 && j === spriteArray[i].length - 1) {
+    if (j === Object.keys(textArray[i]).length && j === Object.keys(spriteArray[i]).length) {
       i= i+1;
       j = 0;
     }
     else {
       j++;
     }
-    if (i === Object.keys(textArray).length  && i === Object.keys(spriteArray).length) {
+    if (textArray[i][j] === "END") {
       gameState = "startBattle";     
     }   
+  }
+  if (gameState === "startBattle") {
+    i = i+1;
   }
 }
 
 function battle() {
-  displayAdia(width/4, height/2, 153, 525);
+  displayAdiaBattle(width/4, height/2, 153, 525, 0);
   noCursor();
   fill(0);
   stroke(255);
@@ -229,18 +251,16 @@ function battle() {
   if (attackState === "bullets") {
     bulletAttack();
   }
-  
-  
-  
-
-
-
-  
-
-
+  if (attackState === "lazers") {
+    lazerAttack();
+  }
+  if (attackState === "text") {
+    createTextbox();
+  }
 }
 
 function displayCursor() {
+  // placeholder 
   fill("blue");
   noStroke();
   circle(mouseX, mouseY, 15);
