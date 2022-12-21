@@ -67,17 +67,14 @@ class Bullets {
   move() {
     this.x += this.dx;
     this.y += this.dy;
+    if (x+startX <=this.x+15 && x+startX >=this.x - 15 && y+startY >= this.y+15 && y+startY<= this.y-15) {
+      touchingBullets = true;
+    }
   }
 
   isDead() {
     return this.x > width || this.x < 0 || this.y > height || this.y < 0;
   }
-
-  isTouching() {
-    return x+startX <=this.x+15 && x+startX >=this.x - 15 && y+startY >= this.y+15 && y+startY<= this.y-15;
-  }
-
-
 }
 let gameState = "startingScreen";
 let attackState = "none";
@@ -87,6 +84,7 @@ let backButton;
 let pixelFont;
 let textArray;
 let spriteArray;
+let touchingBullets = false;
 let hp = 100;
 let bullets = [];
 let i = 0;
@@ -237,6 +235,7 @@ function mousePressed() {
   }
   if (gameState === "startBattle") {
     i = i+1;
+    attackState = "bullets";
   }
 }
 
@@ -285,10 +284,11 @@ function bulletAttack() {
     let someBullet = new Bullets(width/2, 0, random(-5, 5), 3);
     bullets.push(someBullet);
     
-  } 
-  for (let someBullet of bullets) {
-    someBullet.move();
-    someBullet.display();
+  
+    while(bullets.length < 50) {
+      someBullet.move();
+      someBullet.display();
+    }
   }
 
   for (let i = bullets.length-1; i >=0; i--) {
