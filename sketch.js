@@ -236,6 +236,7 @@ function mousePressed() {
   if (gameState === "startBattle") {
     i = i+1;
     attackState = "bullets";
+
   }
 }
 
@@ -247,6 +248,7 @@ function battle() {
   strokeWeight(9);
   rect(width/2, height/2, width/3, width/3);
   playerMove();
+
   if (attackState === "bullets") {
     bulletAttack();
   }
@@ -285,7 +287,7 @@ function bulletAttack() {
     bullets.push(someBullet);
     
   
-    while(bullets.length < 50) {
+    for(let someBullet of bullets) {
       someBullet.move();
       someBullet.display();
     }
