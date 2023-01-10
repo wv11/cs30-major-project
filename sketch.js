@@ -67,9 +67,8 @@ class Bullets {
   move() {
     this.x += this.dx;
     this.y += this.dy;
-    if (x+startX <=this.x+15 && x+startX >=this.x - 15 && y+startY >= this.y+15 && y+startY<= this.y-15) {
-      touchingBullets = true;
-    }
+    touchingBullets = collideCircleCircle(startX + x, startY + y, 20, this.x, this.y, 30);
+    
   }
 
   isDead() {
@@ -85,6 +84,8 @@ let pixelFont;
 let textArray;
 let spriteArray;
 let touchingBullets = false;
+
+
 let hp = 100;
 let bullets = [];
 let i = 0;
@@ -157,6 +158,7 @@ function howToPlay() {
     gameState = "startingScreen";
   }
   displayCursor();
+  
 
 }
 
@@ -212,6 +214,7 @@ function displayAdiaBattle(x, y, width, height, num) {
 }
 
 function startGame() {
+  
   noCursor();
   displayAdiaStory(width/2, height/2+height/5, 305.45, 1050); 
   fill(0);
@@ -241,6 +244,7 @@ function mousePressed() {
 }
 
 function battle() {
+  console.log(touchingBullets);
   displayAdiaBattle(width/4, height/2, 153, 525, 0);
   noCursor();
   fill(0);
@@ -283,7 +287,7 @@ function windowResized() {
 
 function bulletAttack() {
   if (gameState === "startBattle") {    
-    let someBullet = new Bullets(width/2, 0, random(-5, 5), 3);
+    let someBullet = new Bullets(width/2, 0, random(-2, 2), 2);
     bullets.push(someBullet);
     
   
