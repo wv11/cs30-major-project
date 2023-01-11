@@ -67,7 +67,8 @@ class Bullets {
   move() {
     this.x += this.dx;
     this.y += this.dy;
-    touchingBullets = collideCircleCircle(startX + x, startY + y, 20, this.x, this.y, 30);
+    bulletX = this.x;
+    bulletY = this.y;
     
   }
 
@@ -91,6 +92,8 @@ let bullets = [];
 let i = 0;
 let j = 0;
 let x = 0;
+let bulletX;
+let bulletY;
 let y = 0;
 let startX;
 let startY;
@@ -121,6 +124,7 @@ function setup() {
 }
 
 function draw() {
+  touchingBullets = collideCircleCircle(startX + x, startY + y, 20, bulletX, bulletY, 30);
   background(0);
 
   if (gameState === "startingScreen") {
@@ -141,7 +145,9 @@ function startScreen() {
   playButton = new Buttons(windowWidth/2, windowHeight/2, 350, 130);
   playButton.display("PLAY", 90, 15, 5);
   if (mouseIsPressed === true && playButton.isInside(mouseX, mouseY)) {
-    gameState = "gameBegins";
+    //gameState = "gameBegins";
+    gameState = "startBattle";
+    attackState = "bullets";
   }
   htpButton = new Buttons(windowWidth/2, windowHeight/2 + 130, 250, 75);
   htpButton.display("HOW TO PLAY", 30, 10, 1.5);
@@ -157,22 +163,32 @@ function howToPlay() {
   if (mouseIsPressed === true && backButton.isInside(mouseX, mouseY)) {
     gameState = "startingScreen";
   }
-  displayCursor();
   
+  createTextbox(width*0.7, height + 300);
+  displayCursor();
 
 }
 
 function createTextbox(boxW, boxH) {
-  textAlign(LEFT, BASELINE);
-  fill(0);
-  stroke(255);
-  strokeWeight(10);
-  rect(width/2, height - boxH, boxW, boxH);
-  textFont(pixelFont);
-  textSize(30);
-  fill(255);
-  strokeWeight(0.5);
-  text(textArray[i][j], width/2 - boxW/2 + 10*1.4, height - boxH - boxH/2 + 30*1.2);
+  if (gameState === "gameBegins") {
+    textAlign(LEFT, BASELINE);
+    fill(0);
+    stroke(255);
+    strokeWeight(10);
+    rect(width/2, height - boxH, boxW, boxH);
+    textFont(pixelFont);
+    textSize(30);
+    fill(255);
+    strokeWeight(0.5);
+    text(textArray[i][j], width/2 - boxW/2 + 10*1.4, height - boxH - boxH/2 + 30*1.2);
+  }
+  if (gameState === "howToPlay") {
+    textAlign(CENTER);
+    fill(0);
+    stroke(255);
+    strokeWeight(30);
+    rect(width/2, height/2 +200, boxW, boxH);
+  }
 }
 
 function displayAdiaStory(x, y, width, height) { // 0 = neutral, 1 = neutral talking, 2 = eyes closed talking, 3 = eyes closed neutral, 4 = happy talking
@@ -244,6 +260,7 @@ function mousePressed() {
 }
 
 function battle() {
+  
   console.log(touchingBullets);
   displayAdiaBattle(width/4, height/2, 153, 525, 0);
   noCursor();
@@ -260,7 +277,7 @@ function battle() {
     lazerAttack();
   }
   if (attackState === "text") {
-    createTextbox();
+    //createTextbox();
   }
 }
 
@@ -276,6 +293,25 @@ function keyPressed() {
     let fs = fullscreen();
     fullscreen(!fs);
   }
+  if (keyCode === 32) {
+    if (gameState === "gameBegins") {
+      if (j === Object.keys(textArray[i]).length && j === Object.keys(spriteArray[i]).length) {
+        i= i+1;
+        j = 0;
+      }
+      else {
+        j++;
+      }
+      if (textArray[i][j] === "END") {
+        gameState = "startBattle";     
+      }   
+    }
+    if (gameState === "startBattle") {
+      i = i+1;
+      attackState = "bullets";
+  
+    }
+  }
 }
 
 function windowResized() {
@@ -287,13 +323,16 @@ function windowResized() {
 
 function bulletAttack() {
   if (gameState === "startBattle") {    
-    let someBullet = new Bullets(width/2, 0, random(-2, 2), 2);
-    bullets.push(someBullet);
-    
-  
-    for(let someBullet of bullets) {
-      someBullet.move();
+    let someBullet = new Bullets(width/2, 0, random(-10, 10), random(5, 10));
+    if (bullets.length < 50 && attackState === "bullets") {
+      bullets.push(someBullet);
+    }
+    if (bullets.length === 50) {     
+      attackState = "text";
+    }
+    for(let someBullet of bullets) {    
       someBullet.display();
+      someBullet.move(); 
     }
   }
 
