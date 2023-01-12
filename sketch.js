@@ -85,8 +85,7 @@ let pixelFont;
 let textArray;
 let spriteArray;
 let touchingBullets = false;
-
-
+let pos;
 let hp = 100;
 let bullets = [];
 let i = 0;
@@ -120,6 +119,7 @@ function setup() {
   ellipseMode(CENTER);
   startX = windowWidth/2;
   startY = windowHeight/2;
+  pos = height/2 +200;
   noCursor();
 }
 
@@ -187,8 +187,16 @@ function createTextbox(boxW, boxH) {
     fill(0);
     stroke(255);
     strokeWeight(30);
-    rect(width/2, height/2 +200, boxW, boxH);
+    rect(width/2, pos, boxW, boxH);
   }
+}
+
+function mouseWheel(event) {
+  print(event.delta);
+
+  pos -= event.delta;
+  
+
 }
 
 function displayAdiaStory(x, y, width, height) { // 0 = neutral, 1 = neutral talking, 2 = eyes closed talking, 3 = eyes closed neutral, 4 = happy talking
@@ -262,14 +270,14 @@ function mousePressed() {
 function battle() {
   
   console.log(touchingBullets);
-  displayAdiaBattle(width/4, height/2, 153, 525, 0);
+  //displayAdiaBattle(width/4, height/2, 153, 525, 0);
   noCursor();
   fill(0);
   stroke(255);
   strokeWeight(9);
   rect(width/2, height/2, width/3, width/3);
   playerMove();
-
+  displayBullets();
   if (attackState === "bullets") {
     bulletAttack();
   }
@@ -279,6 +287,8 @@ function battle() {
   if (attackState === "text") {
     //createTextbox();
   }
+  
+
 }
 
 function displayCursor() {
@@ -330,12 +340,16 @@ function bulletAttack() {
     if (bullets.length === 50) {     
       attackState = "text";
     }
-    for(let someBullet of bullets) {    
-      someBullet.display();
-      someBullet.move(); 
-    }
   }
+  
+}
 
+function displayBullets() {
+  for(let someBullet of bullets) {    
+    someBullet.display();
+    someBullet.move(); 
+  }
+  
   for (let i = bullets.length-1; i >=0; i--) {
     if (bullets[i].isDead()) {
       bullets.splice(i,1);
