@@ -78,6 +78,7 @@ class Bullets {
 }
 let gameState = "startingScreen";
 let attackState = "none";
+let bulletState = "none";
 let playButton;
 let htpButton;
 let backButton;
@@ -96,6 +97,11 @@ let bulletY;
 let y = 0;
 let startX;
 let startY;
+let bulletPosX;
+let bulletPosY;
+let position = "top";
+let positionArray = ["top", "right", "bottom", "left"];
+
 let adia = {
 };
 
@@ -120,6 +126,10 @@ function setup() {
   startX = windowWidth/2;
   startY = windowHeight/2;
   pos = height/2 +200;
+  bulletPosX = width/2;
+  bulletPosY = 0;
+
+
   noCursor();
 }
 
@@ -148,6 +158,7 @@ function startScreen() {
     //gameState = "gameBegins";
     gameState = "startBattle";
     attackState = "bullets";
+    bulletState = "top";
   }
   htpButton = new Buttons(windowWidth/2, windowHeight/2 + 130, 250, 75);
   htpButton.display("HOW TO PLAY", 30, 10, 1.5);
@@ -193,7 +204,6 @@ function createTextbox(boxW, boxH) {
 
 function mouseWheel(event) {
   print(event.delta);
-
   pos -= event.delta;
   
 
@@ -319,6 +329,7 @@ function keyPressed() {
     if (gameState === "startBattle") {
       i = i+1;
       attackState = "bullets";
+      bulletState = "top";
   
     }
   }
@@ -332,22 +343,47 @@ function windowResized() {
 
 
 function bulletAttack() {
-  if (gameState === "startBattle") {    
-    let someBullet = new Bullets(width/2, 0, random(-10, 10), random(5, 10));
-    if (bullets.length < 50 && attackState === "bullets") {
-      bullets.push(someBullet);
+  if (gameState === "startBattle") {
+    if (bullets.length === 50) {
+      position = positionArray[i+1];
     }
-    if (bullets.length === 50) {     
-      attackState = "text";
+ 
+    
+    if (position === "top") {
+      let topBullet = new Bullets(bulletPosX, bulletPosY, random(-8, 8), random(2, 7));
+      bullets.push(topBullet);
     }
+    if (position === "right") {
+      // bulletState = "right";
+      bulletPosX = width;
+      bulletPosY = height/2;
+      let rightBullet = new Bullets(bulletPosX, bulletPosY, random(-5, -9), random(-5, 5));
+      bullets.push(rightBullet);
+    }
+    if (position === "bottom") {
+      // bulletState = "right";
+      bulletPosX = width/2;
+      bulletPosY = height;
+      let bottomBullet = new Bullets(bulletPosX, bulletPosY, random(-8, 8), random(-7, -2));
+      bullets.push(bottomBullet);
+    }
+
   }
   
 }
 
 function displayBullets() {
-  for(let someBullet of bullets) {    
-    someBullet.display();
-    someBullet.move(); 
+  for(let topBullet of bullets) {    
+    topBullet.display();
+    topBullet.move(); 
+  }
+  for(let rightBullet of bullets) {    
+    rightBullet.display();
+    rightBullet.move(); 
+  }
+  for(let bottomBullet of bullets) {    
+    bottomBullet.display();
+    bottomBullet.move(); 
   }
   
   for (let i = bullets.length-1; i >=0; i--) {
