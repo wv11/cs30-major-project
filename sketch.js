@@ -96,6 +96,7 @@ let bulletX;
 let bulletY;
 let y = 0;
 let startX;
+let k = 0;
 let startY;
 let bulletPosX;
 let bulletPosY;
@@ -125,7 +126,7 @@ function setup() {
   ellipseMode(CENTER);
   startX = windowWidth/2;
   startY = windowHeight/2;
-  pos = height/2 +200;
+  pos = windowHeight/2 +200;
   bulletPosX = width/2;
   bulletPosY = 0;
 
@@ -155,10 +156,10 @@ function startScreen() {
   playButton = new Buttons(windowWidth/2, windowHeight/2, 350, 130);
   playButton.display("PLAY", 90, 15, 5);
   if (mouseIsPressed === true && playButton.isInside(mouseX, mouseY)) {
-    //gameState = "gameBegins";
-    gameState = "startBattle";
-    attackState = "bullets";
-    bulletState = "top";
+    gameState = "gameBegins";
+    // gameState = "startBattle";
+    // attackState = "bullets";
+    // bulletState = "top";
   }
   htpButton = new Buttons(windowWidth/2, windowHeight/2 + 130, 250, 75);
   htpButton.display("HOW TO PLAY", 30, 10, 1.5);
@@ -186,7 +187,7 @@ function createTextbox(boxW, boxH) {
     fill(0);
     stroke(255);
     strokeWeight(10);
-    rect(width/2, height - boxH, boxW, boxH);
+    rect(windowWidth/2, windowHeight - boxH, boxW, boxH);
     textFont(pixelFont);
     textSize(30);
     fill(255);
@@ -198,7 +199,7 @@ function createTextbox(boxW, boxH) {
     fill(0);
     stroke(255);
     strokeWeight(30);
-    rect(width/2, pos, boxW, boxH);
+    rect(windowWidth/2, pos, boxW, boxH);
   }
 }
 
@@ -345,7 +346,8 @@ function windowResized() {
 function bulletAttack() {
   if (gameState === "startBattle") {
     if (bullets.length === 50) {
-      position = positionArray[i+1];
+      k++;
+      position = positionArray[k+1];
     }
  
     
