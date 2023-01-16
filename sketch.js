@@ -76,6 +76,7 @@ class Bullets {
     return this.x > width || this.x < 0 || this.y > height || this.y < 0;
   }
 }
+
 let gameState = "startingScreen";
 let attackState = "none";
 let bulletState = "none";
@@ -102,7 +103,6 @@ let bulletPosX;
 let bulletPosY;
 let position = "top";
 let positionArray = ["top", "right", "bottom", "left"];
-
 let adia = {
 };
 
@@ -150,6 +150,9 @@ function draw() {
   if (gameState === "startBattle") {
     battle();
   }
+  if (gameState === "fadeOut") {
+    fadeOut();
+  }
 }
 
 function startScreen() { 
@@ -176,7 +179,11 @@ function howToPlay() {
     gameState = "startingScreen";
   }
   
-  createTextbox(width*0.7, height + 300);
+  createTextbox(width*0.7, height+300);
+  fill(255);
+  textSize(70);
+  strokeWeight(4);
+  text("HOW TO PLAY", width/2, pos- height*0.5 -80);
   displayCursor();
 
 }
@@ -256,11 +263,14 @@ function startGame() {
   noStroke();
   rect(width/2, height, width, height/4);
   createTextbox(600, 200);
+  
+  
 }
 
 function mousePressed() {
   if (gameState === "gameBegins") {
     if (j === Object.keys(textArray[i]).length && j === Object.keys(spriteArray[i]).length) {
+      
       i= i+1;
       j = 0;
     }
@@ -268,7 +278,9 @@ function mousePressed() {
       j++;
     }
     if (textArray[i][j] === "END") {
-      gameState = "startBattle";     
+      
+      gameState = "fadeOut";
+      //gameState = "startBattle";     
     }   
   }
   if (gameState === "startBattle") {
@@ -278,8 +290,7 @@ function mousePressed() {
   }
 }
 
-function battle() {
-  
+function battle() { 
   console.log(touchingBullets);
   //displayAdiaBattle(width/4, height/2, 153, 525, 0);
   noCursor();
@@ -324,7 +335,8 @@ function keyPressed() {
         j++;
       }
       if (textArray[i][j] === "END") {
-        gameState = "startBattle";     
+        //gameState = "startBattle"; 
+        fadeOut();    
       }   
     }
     if (gameState === "startBattle") {
@@ -345,14 +357,23 @@ function windowResized() {
 
 function bulletAttack() {
   if (gameState === "startBattle") {
+    if (k === 0) {
+      position = "top";
+    }
+    if (k === 1) {
+      position = "right";
+    }
+    if (k === 2) {
+      position = "bottom";
+    }
+    if (k === 3) {
+      position = "left";
+    }
     if (bullets.length === 50) {
       k++;
-      position = positionArray[k+1];
-    }
- 
-    
+    }   
     if (position === "top") {
-      let topBullet = new Bullets(bulletPosX, bulletPosY, random(-8, 8), random(2, 7));
+      let topBullet = new Bullets(bulletPosX, bulletPosY, random(-6, 6), random(2, 7));
       bullets.push(topBullet);
     }
     if (position === "right") {
@@ -366,12 +387,10 @@ function bulletAttack() {
       // bulletState = "right";
       bulletPosX = width/2;
       bulletPosY = height;
-      let bottomBullet = new Bullets(bulletPosX, bulletPosY, random(-8, 8), random(-7, -2));
+      let bottomBullet = new Bullets(bulletPosX, bulletPosY, random(-6, 6), random(-7, -2));
       bullets.push(bottomBullet);
     }
-
-  }
-  
+  }  
 }
 
 function displayBullets() {
@@ -386,8 +405,7 @@ function displayBullets() {
   for(let bottomBullet of bullets) {    
     bottomBullet.display();
     bottomBullet.move(); 
-  }
-  
+  } 
   for (let i = bullets.length-1; i >=0; i--) {
     if (bullets[i].isDead()) {
       bullets.splice(i,1);
@@ -429,4 +447,24 @@ function playerMove() {
 
 }
 
+function fadeOut() {
+  
+  noStroke();
+  
+  for (let a = 255; a > 0; a--) {
+    if (a < 255) {
+      rect(width/2, height/2, width, height);
+      fill(0,0,0,a);
+    }
 
+    if (a === 0) {
+      gameState = "startBattle";
+    }
+    
+  }
+
+
+
+
+
+}
