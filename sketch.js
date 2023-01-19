@@ -101,6 +101,7 @@ let x = 0;
 let bulletX;
 let bulletY;
 let y = 0;
+let bulletShoot = true;
 let startX;
 let k = 0;
 let startY;
@@ -377,31 +378,66 @@ function bulletAttack() {
 
        
     if (position === "top") {
-      let topBullet = new Bullets(bulletPosX, bulletPosY, random(-6, 6), random(2, 7));
-      bullets.push(topBullet);
+      let topBullet = new Bullets(bulletPosX, bulletPosY, random(-6, 6), random(2, 6));
+      if (bullets.length < 50 && bulletShoot === true) {
+        bulletShoot = true;
+        bullets.push(topBullet);
+      }
       hit = collideCircleCircle(startX + x, startY + y, 20, bulletX, bulletY, 30);
-      if (bullets.length === 50) {
+      if (bullets.length === 50 && bulletShoot === true) {
+        bulletShoot = false;
         k++;
+      }
+      if (bullets.length === 0 && bulletShoot ===false) {
+        bulletShoot = true;
       }
     }
     if (position === "right") {
       // bulletState = "right";
       bulletPosX = width;
       bulletPosY = height/2;
-      let rightBullet = new Bullets(bulletPosX, bulletPosY, random(-5, -9), random(-5, 5));
-      bullets.push(rightBullet);
-      if (bullets.length === 50) {
+      let rightBullet = new Bullets(bulletPosX, bulletPosY, random(-5, -6), random(-5, 5));
+      if (bullets.length < 50 && bulletShoot === true) {
+        bullets.push(rightBullet);
+      }
+      if (bullets.length === 50 && bulletShoot === true) {
+        bulletShoot = false;
         k++;
+      }
+      if (bullets.length === 0 && bulletShoot ===false) {
+        bulletShoot = true;
       }
     }
     if (position === "bottom") {
       // bulletState = "right";
       bulletPosX = width/2;
       bulletPosY = height;
-      let bottomBullet = new Bullets(bulletPosX, bulletPosY, random(-6, 6), random(-7, -2));
-      bullets.push(bottomBullet);
-      if (bullets.length === 50) {
+      let bottomBullet = new Bullets(bulletPosX, bulletPosY, random(-6, 6), random(-6, -2));
+      if (bullets.length < 50 && bulletShoot === true) {
+        bullets.push(bottomBullet);
+      }
+      if (bullets.length === 50 && bulletShoot === true) {
+        bulletShoot = false;
         k++;
+      }
+      if (bullets.length === 0 && bulletShoot ===false) {
+        bulletShoot = true;
+      }
+    }
+    if (position === "left") {
+      // bulletState = "right";
+      bulletPosX = 0;
+      bulletPosY = height/2;
+      let leftBullet = new Bullets(bulletPosX, bulletPosY, random(5, 6), random(-5, 5));
+      if (bullets.length < 50 && bulletShoot === true) {
+        bullets.push(leftBullet);
+      }
+      if (bullets.length === 50 && bulletShoot === true) {
+        bulletShoot = false;
+        attackState = "text";
+      }
+      if (bullets.length === 0 && bulletShoot ===false) {
+        bulletShoot = true;
       }
     }
   }  
@@ -421,11 +457,16 @@ function displayBullets() {
     bottomBullet.display();
     bottomBullet.move(); 
   } 
+  for(let leftBullet of bullets) {    
+    leftBullet.display();
+    leftBullet.move(); 
+  } 
   for (let i = bullets.length-1; i >=0; i--) {
     if (bullets[i].isDead()) {
       bullets.splice(i,1);
     }
   }
+  
 }
 
 function lazerAttack() {
@@ -435,7 +476,7 @@ function lazerAttack() {
 
 function playerMove() {
   let edge = 19;
-  let speed = 4; 
+  let speed = 7; 
   noStroke();
   fill(255);
   circle(startX + x, startY + y, 20);
