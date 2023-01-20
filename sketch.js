@@ -77,7 +77,7 @@ class Bullets {
   }
 
   hit() {
-    return this.x === startX+x && this.y === startY+y; 
+    return bulletX === startX+x && bulletY === startY+y; 
 
   }
 }
@@ -135,15 +135,11 @@ function setup() {
   pos = windowHeight/2 +200;
   bulletPosX = width/2;
   bulletPosY = 0;
-
-
   noCursor();
 }
 
 function draw() {
- 
   background(0);
-
   if (gameState === "startingScreen") {
     startScreen();
   }
@@ -184,14 +180,12 @@ function howToPlay() {
   if (mouseIsPressed === true && backButton.isInside(mouseX, mouseY)) {
     gameState = "startingScreen";
   }
-  
   createTextbox(width*0.7, height+300);
   fill(255);
   textSize(70);
   strokeWeight(4);
   text("HOW TO PLAY", width/2, pos- height*0.5 -80);
   displayCursor();
-
 }
 
 function createTextbox(boxW, boxH) {
@@ -219,8 +213,6 @@ function createTextbox(boxW, boxH) {
 function mouseWheel(event) {
   print(event.delta);
   pos -= event.delta;
-  
-
 }
 
 function displayAdiaStory(x, y, width, height) { // 0 = neutral, 1 = neutral talking, 2 = eyes closed talking, 3 = eyes closed neutral, 4 = happy talking
@@ -447,7 +439,6 @@ function displayBullets() {
   for(let topBullet of bullets) {    
     topBullet.display();
     topBullet.move();
-
   }
   for(let rightBullet of bullets) {    
     rightBullet.display();
@@ -476,7 +467,7 @@ function lazerAttack() {
 
 function playerMove() {
   let edge = 19;
-  let speed = 7; 
+  let speed = 9; 
   noStroke();
   fill(255);
   circle(startX + x, startY + y, 20);
