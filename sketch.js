@@ -212,7 +212,9 @@ function createTextbox(boxW, boxH) {
 
 function mouseWheel(event) {
   print(event.delta);
-  pos -= event.delta;
+  if (pos <= windowHeight/2 + 200 && pos >= 194.5) {
+    pos -= event.delta;
+  }
 }
 
 function displayAdiaStory(x, y, width, height) { // 0 = neutral, 1 = neutral talking, 2 = eyes closed talking, 3 = eyes closed neutral, 4 = happy talking
