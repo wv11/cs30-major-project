@@ -1,9 +1,3 @@
-// Project Title
-// Your Name
-// Date
-//
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
 
 class Buttons {
   constructor(x, y, buttonW, buttonH) {
@@ -292,7 +286,7 @@ function mousePressed() {
 
 function battle() { 
   console.log(hit);
-  //displayAdiaBattle(width/4, height/2, 153, 525, 0);
+  displayAdiaBattle(width/4, height/2, 153, 525, 0);
   noCursor();
   fill(0);
   stroke(255);
